@@ -1,0 +1,26 @@
+Relational      Non Relational
+Sql             No Sql
+Schema          SchemaLess
+Database        Database
+Table           Collection
+Row             Document
+
+Sno | Hindi | English | computer
+1      80
+2               80
+3      90                 70
+
+[
+    {
+        sno:1,
+        Hindi:80
+    },
+    {
+        sno:2,
+        English:80
+    }{
+        sno:1,
+        Hindi:90,
+        computer:70
+    }
+]
