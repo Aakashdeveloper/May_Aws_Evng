@@ -1,0 +1,115 @@
+www.    aakashanda     .me
+host    subdomain       top level domain
+
+A record => help to map domain Name to IP address
+        A record for IPv4 
+        AAAA fro IPv6
+
+FQDN
+Fully Qualified Domain Name
+
+
+
+Ec2 => Route53
+S3=> Route53
+ELB
+
+/***********************
+Create Hosted Zone
+**********************/
+Route53
+     Create Hosted Zone
+        =>Provide
+        DoaminName              Type
+        aakashhanda.xyz         Public
+                => Add the NS records in your Domain Server
+                        (bigrock, godaddy)
+
+
+/***********************
+    Host A Website(Ec2)
+**********************/
+=>Create One public Ec2 with app
+    =>Add Http in both inbound and outbound rule
+        =>Create record Set(route53)
+                =>Provide 
+                Name         Type        Value        Routig Policy
+        Keep it blank       Arecrod      Public IP      Simple
+
+/***********************
+    Host A Website(S3 Bucket)
+**********************/
+=>Create One S3 Bucket
+        =>Create Static Website Hosting in S3 Bucket
+                =>Create record Set(route53)
+                        =>Alias(yes)
+                                =>From S3 drop down
+                                        =>Select S3 instance
+                                                =>Routing Policy(simple)
+                                                        =>Create
+
+/***********************
+    For Weight Routing
+**********************/
+=>Create Record Set 
+        =>Add IP
+        =>Type(weight)
+                =>Provide
+                Weight        SetID
+                2             First
+
+**We have to provide weight between 0 - 255
+        0 Is not active machine
+        64      24      12
+       First  Second  Third
+Weight  80     30      15    => 
+SetId   A      A        A
+
+8/33*100
+24.242424242424242
+10/33*100
+30.303030303030305
+15/33*100
+45.45454545454545
+
+
+** % weight is decided by weight of machine/Total weigh
+8+7+11=26
+
+8/26 = 30.76%
+7/26 = 27.92%
+11/26 = 42.30%
+========100%
+
+4+8+7+11=30
+
+
+4/30 = 13%   
+8/30 =26%
+7/30 = 23%
+11/30 = 36%
+
+
+/***********************
+    For Failover Routing
+**********************/
+=> Create Health Check
+        =>Provide
+        Name    ServerIP     HealthCheckUrl
+        TestApp 10.0.01.1     inex.html
+                =>Create Record Set
+                        =>Add IP        
+                          =>Type FailOver Routing
+                                =>Set Primary or Secondary
+
+
+
+Active - Active
+Active - Passive
+Warn StandBy
+
+RTO  > Recovery Time Objective
+RPO  > Recovery Point Objective
+
+https://aws.amazon.com/architecture/well-architected/
+https://wa.aws.amazon.com/index.en.html
